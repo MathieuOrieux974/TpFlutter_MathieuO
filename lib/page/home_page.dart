@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../bo/article.dart';
+import '../bo/cart.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -30,6 +33,17 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () => context.go('/cart'),
+              icon: Badge(
+                  //On affiche un badge par dessus l'icône avec le nombre d'articles
+                  // dans le pânier
+                  label: Text("${context.watch<Cart>().listArticles.length}"),
+                  child: Icon(Icons.shopping_cart)))
+        ],
+      ),
       body: ListView.builder(
           itemCount: listArticles.length,
           itemBuilder: (context, index) => ListTile(
@@ -41,7 +55,9 @@ class HomePage extends StatelessWidget {
                 ),
                 trailing: TextButton(
                   child: Text("AJOUTER"),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<Cart>().add(listArticles[index]);
+                  },
                 ),
               )),
     );
