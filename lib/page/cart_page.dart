@@ -16,8 +16,11 @@ class CartPage extends StatelessWidget {
         body: Consumer<Cart>(
           builder: (BuildContext context, Cart cart, Widget? child) {
             return cart.listArticles.isEmpty
-                ? EmptyCart()
-                : ListCart(listArticles: cart.listArticles);
+                ? const EmptyCart()
+                : ListCart(
+                    listArticles: cart.listArticles,
+                    prixEuro: cart.getTotalPrice(),
+                  );
           },
         ));
   }
@@ -25,12 +28,49 @@ class CartPage extends StatelessWidget {
 
 class ListCart extends StatelessWidget {
   final List<Article> listArticles;
-  const ListCart({super.key, required this.listArticles});
+  final String prixEuro;
+  const ListCart({
+    required this.listArticles,
+    required this.prixEuro,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
+  Widget build(BuildContext context) => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Votre panier toal est de "),
+                Text(
+                  prixEuro,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          Divider(),
+          Expanded(
+            child: ListView.builder(
+                itemCount: listArticles.length,
+                itemBuilder: (context, index) => ListTile(
+                      title: Text(listArticles[index].nom),
+                      subtitle: Text(listArticles[index].getPrixEuro()),
+                      leading: Image.network(
+                        listArticles[index].image,
+                        width: 80,
+                      ),
+                      trailing: TextButton(
+                        child: Text("SUPPRIMER"),
+                        onPressed: () {
+                          context.read<Cart>().remove(listArticles[index]);
+                        },
+                      ),
+                    )),
+          ),
+        ],
+      );
 }
 
 class EmptyCart extends StatelessWidget {
@@ -40,20 +80,10 @@ class EmptyCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return const Padding(
       padding: const EdgeInsets.all(16.0),
       child: Stack(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Votre panier toal est de "),
-              Text(
-                "0.00€",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
           Align(
             alignment: Alignment.center,
             child: Column(
