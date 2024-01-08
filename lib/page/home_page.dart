@@ -24,7 +24,8 @@ class HomePage extends StatelessWidget {
         prix: 494900),
     Article(
         nom: "Dell XPS",
-        description: "Ordinateur Un peu plus low cost",
+        description:
+            "Ordinateur Un peu plus low cost Ordinateur Un peu plus low cost v vOrdinateur Un peu plus low costOrdinateur Un peu plus low costvvOrdinateur Un peu plus low costvOrdinateur Un peu plus low costOrdinateur Un peu plus low costOrdinateur Un peu plus low costOrdinateur Un peu plus low costOrdinateur Un peu plus low costOrdinateur Un peu plus low costOrdinateur Un peu plus low costOrdinateur Un peu plus low costOrdinateur Un peu plus low costOrdinateur Un peu plus low cost ",
         categorie: "Ordinateur Accessible",
         image:
             "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/xps-15-9530/media-gallery/touch-black/notebook-xps-15-9530-t-black-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=654&qlt=100,1&resMode=sharp2&size=654,402&chrss=full",
@@ -47,6 +48,7 @@ class HomePage extends StatelessWidget {
       body: ListView.builder(
           itemCount: listArticles.length,
           itemBuilder: (context, index) => ListTile(
+                onTap: () => context.go("/detail", extra: listArticles[index]),
                 title: Text(listArticles[index].nom),
                 subtitle: Text(listArticles[index].getPrixEuro()),
                 leading: Image.network(
