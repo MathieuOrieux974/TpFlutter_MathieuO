@@ -8,7 +8,9 @@ import 'bo/article.dart';
 
 final _router = GoRouter(routes: [
   GoRoute(path: "/", builder: (_, __) => HomePage(), routes: [
-    GoRoute(path: "cart", builder: (_, __) => CartPage()),
+    GoRoute(
+        path: "cart",
+        builder: (_, __) => CartPage()),
     GoRoute(
         path: "detail",
         builder: (_, state) => DetailPage(article: state.extra as Article)),
