@@ -22,7 +22,10 @@ class HomePage extends StatelessWidget {
                   //On affiche un badge par dessus l'icône avec le nombre d'articles
                   // dans le pânier
                   label: Text("${context.watch<Cart>().listArticles.length}"),
-                  child: Icon(Icons.shopping_cart)))
+                  child: Icon(Icons.shopping_cart))),
+          IconButton(
+              onPressed: () => context.go("/aboutus"),
+              icon: Icon(Icons.info_outline))
         ],
       ),
       body: FutureBuilder<List<Article>>(
