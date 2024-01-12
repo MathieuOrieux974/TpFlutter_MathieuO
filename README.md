@@ -1,6 +1,6 @@
 # epsi_shop
 
-A new Flutter project.
+Mathieu Orieux
 
 ## Getting Started
 
