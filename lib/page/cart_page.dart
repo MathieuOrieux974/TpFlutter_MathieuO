@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../bo/article.dart';
@@ -6,36 +7,50 @@ import '../bo/cart.dart';
 
 class CartPage extends StatelessWidget {
   CartPage({super.key});
+
   final List<Article> listArticles = <Article>[];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("EPSI Shop"),
+      appBar: AppBar(
+        title: const Text("EPSI Shop"),
+      ),
+      body: Consumer<Cart>(
+        builder: (BuildContext context, Cart cart, Widget? child) {
+          return cart.listArticles.isEmpty
+              ? const EmptyCart()
+              : ListCart(
+            listArticles: cart.listArticles,
+            prixEuro: cart.getTotalPrice(),
+          );
+        },
+
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () => context.go('/payment'),
+          child: Text("Procéder au paiement"),
         ),
-        body: Consumer<Cart>(
-          builder: (BuildContext context, Cart cart, Widget? child) {
-            return cart.listArticles.isEmpty
-                ? const EmptyCart()
-                : ListCart(
-                    listArticles: cart.listArticles,
-                    prixEuro: cart.getTotalPrice(),
-                  );
-          },
-        ));
+      ),
+    );
+
   }
 }
 
 class ListCart extends StatelessWidget {
   final List<Article> listArticles;
   final String prixEuro;
+
   const ListCart({
     required this.listArticles,
     required this.prixEuro,
   });
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context) =>
+      Column(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -54,7 +69,8 @@ class ListCart extends StatelessWidget {
           Expanded(
             child: ListView.builder(
                 itemCount: listArticles.length,
-                itemBuilder: (context, index) => ListTile(
+                itemBuilder: (context, index) =>
+                    ListTile(
                       title: Text(listArticles[index].nom),
                       subtitle: Text(listArticles[index].getPrixEuro()),
                       leading: Image.network(
@@ -99,3 +115,7 @@ class EmptyCart extends StatelessWidget {
     );
   }
 }
+
+
+
+

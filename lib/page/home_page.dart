@@ -24,8 +24,9 @@ class HomePage extends StatelessWidget {
                   label: Text("${context.watch<Cart>().listArticles.length}"),
                   child: Icon(Icons.shopping_cart))),
           IconButton(
-              onPressed: () => context.go("/aboutus"),
-              icon: Icon(Icons.info_outline))
+              onPressed: () => context.go('/aboutUs'),
+              icon: Badge(
+                  child: Icon(Icons.map_outlined)))
         ],
       ),
       body: FutureBuilder<List<Article>>(
