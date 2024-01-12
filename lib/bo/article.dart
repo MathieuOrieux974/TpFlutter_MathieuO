@@ -3,7 +3,6 @@ class Article {
   String description;
   String categorie;
   final String image;
-  //num ou int en cents
   int prix;
 
   Article({

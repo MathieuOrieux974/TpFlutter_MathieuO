@@ -25,9 +25,10 @@ class CartPage extends StatelessWidget {
             prixEuro: cart.getTotalPrice(),
           );
         },
-
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar:  context.read<Cart>().listArticles.isEmpty
+          ? null
+          : Container(
         padding: EdgeInsets.all(16.0),
         child: ElevatedButton(
           onPressed: () => context.go('/payment'),
